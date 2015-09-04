@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-	<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+	<title>{% block title %}{% endblock %}</title>
+	{% block css %}{% endblock %}
+	{%block js %}{% endblock %}
+	<style type="text/css">
+	html, body {
+		margin: 0;
+		padding: 0;
+	}
+	header {
+		width: 100%;
+	    height: 60px;
+	    background: #006341;
+	    top: 0;
+	}
+
+	</style>
 </head>
 
 <body>
-	<div>
-		{% block body_block %}{% endblock %}
-	</div>
-
-	<hr />
-
-	<div>
-		<ul>
-			{% if user.is_authenticated %}
-			<li><a href="{% url 'restricted' %}">Restricted Page</a></li>
-			<li><a href="{% url 'logout' %}">Logout</a></li>
-			<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
-			{% else %}
-			<li><a href="{% url 'register' %}">Register Here</a></li>
-			<li><a href="{% url 'login' %}">Login</a></li>
-			{% endif %}
-
-			<li><a href="{% url 'about' %}">About</a></li>
-		</ul>
-	</div>
+	<header></header>
+	{% block body_block %}{% endblock %}
 </body>
 </html>
