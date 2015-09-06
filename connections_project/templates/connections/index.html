@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 
-{% load staticfiles %} 
+{% load staticfiles %}
+
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/header.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/header.css" %}">
 </head>
 
 <body>
-    <div class="container-fluid">
-      <div class="row" style="background-color:#006341; height: 25% ; color: white;">
-          <div class="col-md-2">
-          </div>
-          <div class="col-md-6" >
-              <h1 style="color:white; font-size: 50px;">{{webAppTitle}}</h1>
-          </div>
-          <div class="col-md-4" >
-              <div class="row">
+    <div class="header">
+        <div class="title">
+          <h4>MySite</h4>
+        </div>
 
-                <table class="login">
+        <table class="login">
                     <tr>
                         <th>Username:</th>
                         <th>Password:</th>
@@ -31,25 +28,15 @@
                         <td><button type="button" class="btn btn-success" style="margin-top: auto">Login</button></td>
                     </tr>
                 </table>
-            </div>         
-        </div>
-
     </div>
-
-
-    <div class="row" >
-        <div class="col-md-2">
+    <div class="main">
+        <div class="description">
 
         </div>
-        <div class="col-md-8">
-            <div class="row"  style="background-color: #EEEEEE; height: 800px;">
-                <div class="col-md-5">
+        <div class="register">
+            <h1>New user? Register Here!</h1>  
 
-                </div>
-                <div class="col-md-7">
-                    <h1>New user? Register Here!</h1>  
-
-                    <table class="register">
+                    <table class="table-register">
 
                         <tr>
                             <td>First Name:</td>
@@ -75,33 +62,11 @@
                         </tr>
                     </table>
 
-                </div>
-                
-            </div>
-            
-        </div>
-        <div class="col-md-2">
-
         </div>
     </div>
-    
-    <div class="footerWrap row">
-        <div class="footer">
-          <div class="footerContent">
-            <p>a Piyush Golani production</p>
-          </div>     
-        </div>
+    <div class="footer">
+        <h3>a <b>Piyush Golani</b> production</h3>
     </div>
-
-
-</div>
-
-
 
 </body>
 </html>
-
-
-
-
-
