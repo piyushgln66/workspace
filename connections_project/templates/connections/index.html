@@ -34,23 +34,37 @@
 
         </div>
         <div class="register">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color:red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form id="user_form" method="post" action="/connections/register/"
+            enctype="multipart/form-data">
+            {% csrf_token %}
             <h1>New user? Register Here!</h1>  
 
                     <table class="table-register">
 
                         <tr>
                             <td>First Name:</td>
-                            <td><input type="text" class="form-control" placeholder="First Name" aria-describedby="basic-addon1"></td>
+                            <td><input type="text" class="form-control" placeholder="First Name" name="firstname" aria-describedby="basic-addon1"></td>
                             <td>Last Name:</td>
-                            <td><input type="text" class="form-control" placeholder="Last Name" aria-describedby="basic-addon1"></td>
+                            <td><input type="text" class="form-control" placeholder="Last Name" name="lastname" aria-describedby="basic-addon1"></td>
                         </tr>
                         <tr>
                             <td>Email ID:</td>
-                            <td colspan="3"><input type="text" class="form-control" placeholder="Email ID" aria-describedby="basic-addon1"></td>
+                            <td colspan="3"><input type="text" class="form-control" placeholder="Email ID" name="email" aria-describedby="basic-addon1"></td>
+                        </tr>
+                        <tr>
+                            <td>Username:</td>
+                            <td colspan="3"><input type="text" class="form-control" placeholder="Username" name="username" aria-describedby="basic-addon1"></td>
                         </tr>
                         <tr>
                             <td>Password:</td>
-                            <td colspan="3"><input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1"></td>
+                            <td colspan="3"><input type="text" class="form-control" placeholder="Password" name="password" aria-describedby="basic-addon1"></td>
                         </tr>
                         <tr>
                             <td>Confirm Password:</td>
@@ -58,10 +72,10 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td colspan="3"><button type="button" class="btn btn-success" style="width:200px;">Sign up</button></td>
+                            <td colspan="3"><input type="submit" class="btn btn-success" value= "Sign up" style="width:200px;"></td>
                         </tr>
                     </table>
-
+            </form>
         </div>
     </div>
     <div class="footer">
