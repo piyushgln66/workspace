@@ -1,9 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-	firstname = models.CharField(max_length=20, null=False)
-	lastname = models.CharField(max_length=20, null=False)
-	email = models.CharField(max_length=50, null=False)
-	username = models.CharField(max_length=20, unique= True, null=False)
-	password = models.CharField(max_length=50, null=False)
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(User)
+
+    # The additional attributes we wish to include.
+    sex = models.CharField(max_length=1, null=False)
+
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username

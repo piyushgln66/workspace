@@ -1,0 +1,46 @@
+.main {
+	width: 80%;
+	margin: auto;
+	margin-top: 61px;
+	/*background-color: red;*/
+	display: flex;
+}
+
+
+.left {
+	width: 30%;
+	height: 100%;
+	/*background-color: yellow;*/
+	border-right: 1px solid black;
+	padding: 10px; 
+}
+
+.right {
+	width: 70%;
+	height: 500px;
+	/*background-color: blue;*/
+	padding: 10px;
+}
+
+
+
+.pic {
+	/*background-color: purple;*/
+	height: 400px;
+}
+
+.links {
+	background-color: #EEEEEE;
+	height: 400px;
+	margin-top: 10px;
+	padding-top: 10px;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+}
+
+ul li {
+	font-size: 30px;
+}

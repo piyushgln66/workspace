@@ -26,6 +26,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/connections/' # this is the url to which user is directed if he tries to view a page which requires login
+
 
 # Application definition
 

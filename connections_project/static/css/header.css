@@ -7,6 +7,12 @@
     
 }
 
+/*for changing the style of error messages of jquery validate*/
+label.error {
+	color: red;
+	font-weight: normal;
+}
+
 
 .title {
 	width: 65%;
@@ -32,12 +38,12 @@
 }
 
 .description {
-	width: 42%;
+	width: 40%;
 	height: 100%;
 }
 
 .register {
-	width: 58%;
+	width: 60%;
 	height: 100%;
 }
 

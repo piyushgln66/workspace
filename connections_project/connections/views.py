@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from connections.models import User
+from connections.models import UserProfile
+from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponse
 
 
 
@@ -10,7 +15,7 @@ def index(request):
     context_dict = {'webAppTitle': webAppTitle, 'title':webAppTitle}
     return render(request, 'connections/index.html', context_dict)
 
-
+@login_required
 def profile(request):
     context_dict = {'webAppTitle': webAppTitle, 'title':webAppTitle}
     return render(request, 'connections/profile.html')
@@ -28,6 +33,7 @@ def register(request):
         FirstName = request.POST['firstname']
         LastName = request.POST['lastname']
         Email = request.POST['email']
+        Sex = request.POST['sex']
         Username = request.POST['username']
         Password = request.POST['password']
         #validate
@@ -51,8 +57,9 @@ def register(request):
             error=True
 
         if not error:
-            user = User(firstname=FirstName,lastname=LastName,email=Email,username=Username,password=Password)
-            user.save()
+            user = User.objects.create_user(first_name=FirstName,last_name=LastName,email=Email,username=Username,password=Password)
+            user_profile = UserProfile(user=user, sex=Sex)
+            user_profile.save()
             return render(request,
             'connections/success.html')
         else:
@@ -60,3 +67,47 @@ def register(request):
             'connections/index.html')
 
 
+def user_login(request):
+
+    # If the request is a HTTP POST, try to pull out the relevant information.
+    if request.method == 'POST':
+        # Gather the username and password provided by the user.
+        # This information is obtained from the login form.
+                # We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
+                # because the request.POST.get('<variable>') returns None, if the value does not exist,
+                # while the request.POST['<variable>'] will raise key error exception
+        username = request.POST.get('login_username')
+        password = request.POST.get('login_password')
+
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        user = authenticate(username=username, password=password)
+
+        # If we have a User object, the details are correct.
+        # If None (Python's way of representing the absence of a value), no user
+        # with matching credentials was found.
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
+                login(request, user)
+                return HttpResponseRedirect('/connections/profile/')
+            else:
+                # An inactive account was used - no logging in!
+                return HttpResponse("Your Rango account is disabled.")
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+
+
+
+# Use the login_required() decorator to ensure only those logged in can access the view.
+@login_required
+def user_logout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+
+    # Take the user back to the homepage.
+    return HttpResponseRedirect('/connections/')
