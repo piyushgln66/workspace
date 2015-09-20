@@ -12,3 +12,14 @@ class UserProfile(models.Model):
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username
+
+
+class DemoContent(models.Model):
+    content = models.CharField(max_length=200)
+
+
+class Document(models.Model):
+    user = models.ForeignKey(User)
+    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
+
+

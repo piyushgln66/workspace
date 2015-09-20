@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from connections.models import UserProfile
+from connections.models import UserProfile, DemoContent, Document
+from connections.forms import DocumentForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
@@ -17,8 +18,19 @@ def index(request):
 
 @login_required
 def profile(request):
-    context_dict = {'webAppTitle': webAppTitle, 'title':webAppTitle}
-    return render(request, 'connections/profile.html')
+    form = DocumentForm()
+    
+    try:
+        picture = Document.objects.get(user_id=request.user.id)
+        photo = "/media/" + picture.docfile.name
+    except Document.DoesNotExist:
+        photo = '/media/blank_male.jpg'
+    
+    context_dict = {'form': form, 'photo':photo}   
+    
+    return render(request, 'connections/profile.html', context_dict)
+        
+    
 
 
 def register(request):
@@ -111,3 +123,50 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/connections/')
+
+
+
+@login_required
+def fetch_content(request):
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        try:
+            demo_content = DemoContent.objects.get(id=id)
+            return HttpResponse(demo_content.content)
+        except DemoContent.DoesNotExist:
+            return HttpResponse("No content with given id found !")
+        
+
+
+
+
+@login_required
+def upload(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                # first delete the previous object
+                Document.objects.get(user= User.objects.get(id=request.user.id)).delete()
+            except Document.DoesNotExist:
+                print('already deleted')
+
+            # now create the new object
+            newdoc = Document(docfile = request.FILES['docfile'])
+
+            newdoc.user = User.objects.get(id=request.user.id)
+            newdoc.save()
+
+            # Redirect to the document list after POST
+            return HttpResponseRedirect('/connections/profile/')
+
+
+
+
+
+
+
+
+
+

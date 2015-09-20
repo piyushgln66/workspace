@@ -12,13 +12,14 @@
 {% block js %}
 
 <script type="text/javascript" src="{% static "js/jquery-1.11.3.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/profile_js.js" %}"></script>
 {% endblock %}
 
 {% block body_block %}
     <div class="main">
         <div class="left">
             <div class="pic">
-                <img src="{% static "images/blank_male.jpg" %}">
+                <img src="{{photo}}">
             </div>
             <div class="links">
                 <ul>
@@ -30,7 +31,25 @@
         </div>
         <div class="right">
             <h1>Nikki Lauda</h1>
-            <h4 style="color: red;">You are not linked with any start up</h4>
+            <div style="height:200px;">
+                <input type="text" placeholder="Enter the id" id="idBox" onkeypress="return isNumber(event)">
+                <input type="button" value="click me" onclick="ajaxCall()"><br>
+                <div id="content"></div>
+                <div id="photo_upload">
+                    <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p>{{ form.non_field_errors }}</p>
+                        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+                        <p>
+                            {{ form.docfile.errors }}
+                            {{ form.docfile }}
+                        </p>
+                        <p><input type="submit" value="Upload" /></p>
+                    </form>
+                </div>
+            </div>
+            
+
             <button onclick="location.href = '/connections/logout/';"  class="btn btn-danger" >Logout</button>
         </div>
     </div>
