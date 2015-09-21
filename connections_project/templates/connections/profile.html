@@ -19,7 +19,11 @@
     <div class="main">
         <div class="left">
             <div class="pic">
-                <img src="{{photo}}">
+                {% if picture %}
+                <img src="{{picture.docfile.url}}">
+                {% else %}
+                <img src="/media/blank_male.jpg">
+                {% endif %}
             </div>
             <div class="links">
                 <ul>

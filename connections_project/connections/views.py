@@ -22,11 +22,12 @@ def profile(request):
     
     try:
         picture = Document.objects.get(user_id=request.user.id)
-        photo = "/media/" + picture.docfile.name
+        # photo = "/media/" + picture.docfile.name
     except Document.DoesNotExist:
-        photo = '/media/blank_male.jpg'
+        # photo = '/media/blank_male.jpg'
+        picture = None
     
-    context_dict = {'form': form, 'photo':photo}   
+    context_dict = {'form': form, 'picture':picture}   
     
     return render(request, 'connections/profile.html', context_dict)
         

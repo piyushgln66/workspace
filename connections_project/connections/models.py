@@ -19,7 +19,7 @@ class DemoContent(models.Model):
 
 
 class Document(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
 
